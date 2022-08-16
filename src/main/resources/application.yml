@@ -1,0 +1,35 @@
+server:
+  port: 8081
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          facebook :
+            client-id: "425660306203955"
+            client-secret: "833d157ea0e1109e831fc50db2546eb5"
+          google :
+            client-id: "654752302102-kt51n2obt9ntfi3lbgfohppf6jo176iv.apps.googleusercontent.com"
+            client-secret: "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"
+
+  h2:
+    console:
+      enabled: true
+
+  datasource:
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+        default_batch_fetch_size: 100
+        show_sql: true
+    open-in-view: false
+
