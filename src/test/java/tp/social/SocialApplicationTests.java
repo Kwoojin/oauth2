@@ -1,10 +1,10 @@
-package fc.oauth2;
+package tp.social;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class Oauth2ApplicationTests {
+class SocialApplicationTests {
 
 	@Test
 	void contextLoads() {

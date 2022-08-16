@@ -1,13 +1,13 @@
-package fc.oauth2;
+package tp.social;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Oauth2Application {
+public class SocialApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Oauth2Application.class, args);
+		SpringApplication.run(SocialApplication.class, args);
 	}
 
 }
