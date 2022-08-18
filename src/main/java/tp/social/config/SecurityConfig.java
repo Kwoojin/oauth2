@@ -1,9 +1,11 @@
 package tp.social.config;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -28,26 +30,33 @@ public class SecurityConfig {
     private final Environment environment;
     private final FacebookOAuth2UserService facebookOAuth2UserService;
     private final GoogleOAuth2UserService googleOAuth2UserService;
+    private final OAuth2SuccessHandler oAuth2SuccessHandler;
     private final String registration = "spring.security.oauth2.client.registration.";
 
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .headers().frameOptions().disable().and()
-                .authorizeHttpRequests((authorize) -> authorize
-                        .antMatchers("/login","index").permitAll()
+                .authorizeHttpRequests((auth) -> auth
+                        .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+                        .mvcMatchers(
+                                HttpMethod.GET,
+                                "/login",
+                                "index"
+                        ).permitAll()
                         .anyRequest().authenticated()
                 )
 //                .oauth2Login(withDefaults())
                 .oauth2Login(oauth2 -> oauth2
                         .clientRegistrationRepository(clientRegistrationRepository())
                         .authorizedClientService(authorizedClientService())
-                        .userInfoEndpoint( user -> user
-                                .oidcUserService(googleOAuth2UserService)  // google 인증, OpenID Connect 1.0
-                                .userService(facebookOAuth2UserService)  // facebook 인증, OAuth2 통신
+                        .userInfoEndpoint( user -> user // Provider 로부터 획득한 유저정보를 다룰 service 를 지정
+                                .oidcUserService(googleOAuth2UserService)  // OpenID Connect 2.0 : google
+                                .userService(facebookOAuth2UserService)  // OAuth2 통신 : facebook, naver, ...
                         )
+                        .successHandler(oAuth2SuccessHandler)
                 )
+
         ;
         return http.build();
     }
