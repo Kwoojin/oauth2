@@ -8,13 +8,13 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfig {
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeRequests().anyRequest().authenticated();
-        http.formLogin();
-        http.apply(new CustomSecurityConfigurer().setFlag(false));
-        return http.build();
-    }
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//        http.authorizeRequests().anyRequest().authenticated();
+//        http.formLogin();
+//        http.apply(new CustomSecurityConfigurer().setFlag(false));
+//        return http.build();
+//    }
 
 
 }
