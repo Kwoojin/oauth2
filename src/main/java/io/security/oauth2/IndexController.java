@@ -29,11 +29,6 @@ public class IndexController {
     @GetMapping("/")
     public String index() {
 
-        ClientRegistration clientRegistration = clientRegistrationRepository.findByRegistrationId("keycloak");
-
-        System.out.println("clientRegistration.getClientId() = " + clientRegistration.getClientId());
-        System.out.println("clientRegistration.getRedirectUri() = " + clientRegistration.getRedirectUri());
-
         return "index";
     }
 
