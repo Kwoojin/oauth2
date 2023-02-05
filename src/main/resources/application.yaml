@@ -13,7 +13,8 @@ spring:
             client-secret: Bi7RyJ72QB2BNKWS51RC7LhoNDFSLkFQ
             redirect-uri: http://localhost:8081/login/oauth2/code/keycloak
             clientAuthenticationMethod: client_secret_post
-            scope: openid,email,profile
+            scope: email, profile
+
         provider:
           keycloak:
             authorization-uri: http://localhost:8080/realms/oauth2/protocol/openid-connect/auth
@@ -22,3 +23,4 @@ spring:
             token-uri: http://localhost:8080/realms/oauth2/protocol/openid-connect/token
             user-info-uri: http://localhost:8080/realms/oauth2/protocol/openid-connect/userinfo
             user-name-attribute: preferred_username
+
