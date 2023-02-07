@@ -8,8 +8,8 @@ import java.util.Base64;
 
 public class EncryptionUtils {
     private static final String alg = "AES/CBC/PKCS5Padding";
-    private static final String key = "majestysecretketf8mnclapq03mvld2"; // 32byte
-    private static final String iv = "majesty3mvlkd02l"; // 16byte
+    private static final String key = "sdfeclwi48fnkcotf8mnclapq03mvld2"; // 32byte
+    private static final String iv = "mdhdk38dnvlkd02l"; // 16byte
 
     // 암호화 encryptAES256
     public static String encrypt(String text) {
