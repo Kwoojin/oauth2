@@ -23,8 +23,16 @@ public class SecurityConfig {
                 .anyRequest().authenticated());
         http.oauth2Login(authLogin ->
                 authLogin.authorizationEndpoint(authEndpoint ->
-                        authEndpoint.authorizationRequestResolver(customOAuth2AuthenticationRequestResolver())));
-        http.logout().logoutSuccessUrl("/home");
+                        authEndpoint.authorizationRequestResolver(customOAuth2AuthenticationRequestResolver()))
+
+        );
+        http.logout(logout -> logout
+                .logoutSuccessUrl("/home")
+                .logoutSuccessHandler(oidcLogoutSuccessHandler())
+                .invalidateHttpSession(true)
+                .clearAuthentication(true)
+                .deleteCookies("JSESSIONID")
+        );
         return http.build();
 
 //        return http
@@ -36,21 +44,15 @@ public class SecurityConfig {
 ////                        .loginPage("/loginPage")
 //
 //                )
-//                .logout(logout -> logout
-//                                .logoutSuccessUrl("/home")
-////                        .logoutSuccessHandler(oidcLogoutSuccessHandler())
-////                        .invalidateHttpSession(true)
-////                        .clearAuthentication(true)
-////                        .deleteCookies("JSESSIONID")
-//                )
+
 //                .build();
     }
 
-//    private OidcClientInitiatedLogoutSuccessHandler oidcLogoutSuccessHandler() {
-//        OidcClientInitiatedLogoutSuccessHandler successHandler = new OidcClientInitiatedLogoutSuccessHandler(clientRegistrationRepository);
-//        successHandler.setPostLogoutRedirectUri("http://localhost:8081/login");
-//        return successHandler;
-//    }
+    private OidcClientInitiatedLogoutSuccessHandler oidcLogoutSuccessHandler() {
+        OidcClientInitiatedLogoutSuccessHandler successHandler = new OidcClientInitiatedLogoutSuccessHandler(clientRegistrationRepository);
+        successHandler.setPostLogoutRedirectUri("http://localhost:8081/login");
+        return successHandler;
+    }
 
     private OAuth2AuthorizationRequestResolver customOAuth2AuthenticationRequestResolver() {
         return new CustomOAuth2AuthorizationRequestResolver(clientRegistrationRepository, "/oauth2/authorization");
